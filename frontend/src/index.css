@@ -1,0 +1,508 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* High-Performance Medical Palette (v3.0) */
+  --h-primary: 204;
+  --s-primary: 90%;
+  --l-primary: 50%;
+
+  --accent: hsl(var(--h-primary), var(--s-primary), var(--l-primary));
+  --accent-glow: hsla(var(--h-primary), var(--s-primary), var(--l-primary), 0.25);
+  --accent-hover: hsl(var(--h-primary), var(--s-primary), 65%);
+
+  --bg-deep: #05070a;
+  --bg-glass: rgba(13, 17, 23, 0.75);
+  --bg-card: #0d1117;
+
+  --border: rgba(255, 255, 255, 0.05);
+  --border-bright: rgba(255, 255, 255, 0.12);
+
+  --text: #f0f4f8;
+  --text-muted: #8ba2b9;
+  --text-dim: #4d667d;
+
+  --clinical-cyan: #00f2ff;
+  --clinical-red: #ff3b3b;
+  --clinical-green: #00ff88;
+
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow-ux: 0 20px 50px -12px rgba(0, 0, 0, 0.8);
+
+  --font-main: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  --glass-stroke: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.02));
+  --inner-glow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+
+  --anim-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-main);
+  background: var(--bg-deep);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 🌀 Immersive High-Fidelity Mesh Background */
+.mesh-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background: var(--bg-deep);
+  overflow: hidden;
+}
+
+.mesh-bg::before,
+.mesh-bg::after {
+  content: "";
+  position: absolute;
+  width: 140vmax;
+  height: 140vmax;
+  top: -20vmax;
+  left: -20vmax;
+  background-image:
+    radial-gradient(circle at 20% 30%, hsla(var(--h-primary), 90%, 50%, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, hsla(260, 80%, 50%, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, hsla(var(--h-primary), 90%, 60%, 0.05) 0%, transparent 60%);
+  filter: blur(80px);
+  animation: mesh-float 30s infinite alternate ease-in-out;
+}
+
+.mesh-bg::after {
+  left: auto;
+  right: -20vmax;
+  animation-duration: 45s;
+  animation-direction: alternate-reverse;
+  opacity: 0.6;
+}
+
+@keyframes mesh-float {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(5deg) scale(1.1);
+  }
+
+  100% {
+    transform: rotate(-5deg) scale(1);
+  }
+}
+
+/* 🧊 Glassmorphism 3.0 (Frosted Noise) */
+.glass-3-0 {
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-ux), var(--inner-glow);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-3-0::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.015;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 🧬 Clinical Typography */
+.clinical-data {
+  font-family: var(--font-mono);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--clinical-cyan);
+}
+
+/* ─── Layout & Header ────────────────────── */
+.app {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2.5rem;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.header-logo {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 0 10px var(--accent-glow));
+}
+
+.tag-v2 {
+  font-size: 0.65rem;
+  padding: 0.2rem 0.5rem;
+  background: var(--accent-glow);
+  color: var(--accent);
+  border-radius: 4px;
+  vertical-align: middle;
+  margin-left: 0.5rem;
+  border: 1px solid hsla(var(--h-primary), 90%, 50%, 0.2);
+}
+
+/* ─── Main Grid (Wide Clinical Layout) ────── */
+.app-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.left-column,
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ─── Action Bar (Restored v3.1) ─────────── */
+.action-bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin: 1rem 0 3rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.btn-reset {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-analyze {
+  background: linear-gradient(135deg, var(--accent), #1e40af);
+  border: none;
+  color: #fff;
+  padding: 0.8rem 2rem;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 8px 20px var(--accent-glow);
+  transition: all 0.2s ease;
+}
+
+/* ─── Cards & Forms ──────────────────────── */
+.card {
+  background: var(--bg-glass);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.hint {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+textarea,
+input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border);
+  color: #fff;
+  padding: 0.8rem;
+  border-radius: var(--radius-sm);
+}
+
+/* ─── Multimodal Upload Zone ─────────────── */
+.upload-zone {
+  border: 2px dashed var(--border-bright);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.upload-zone:hover {
+  border-color: var(--accent);
+  background: rgba(var(--h-primary), 90%, 50%, 0.05);
+}
+
+.upload-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.image-preview-container {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border-bright);
+}
+
+.lab-preview-img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  background: #000;
+}
+
+.btn-clear-img {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 59, 59, 0.9);
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ─── Badges & Status ──────────────────── */
+.badge {
+  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge-vision {
+  background: rgba(var(--h-primary), 90%, 50%, 0.15);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.animate-pulse {
+  animation: pulse-border 2s infinite;
+}
+
+@keyframes pulse-border {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .7;
+  }
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4d667d;
+}
+
+.status-badge.connected .status-dot {
+  background: var(--clinical-green);
+  box-shadow: 0 0 10px var(--clinical-green);
+}
+
+/* ─── Debug Panel (Subtle v3.1) ───────────── */
+.dev-debug-panel {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.75rem;
+}
+
+.dev-debug-panel h5 {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.debug-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.debug-val {
+  color: var(--clinical-cyan);
+  font-family: var(--font-mono);
+}
+
+/* ─── Dashboard Highlights ────────────────── */
+.clinical-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
+}
+
+.clinical-table tr {
+  background: rgba(255, 255, 255, 0.02);
+  transition: transform 0.2s ease;
+}
+
+.clinical-table tr:hover {
+  transform: scale(1.01);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.clinical-table th {
+  text-align: left;
+  padding: 1rem;
+  color: var(--text-dim);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.clinical-table td {
+  padding: 1rem;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.spark-tag {
+  padding: 0.2rem 0.5rem;
+  background: rgba(var(--h-primary), 90%, 50%, 0.1);
+  color: var(--accent);
+  font-size: 0.6rem;
+  font-weight: 700;
+  border-radius: 4px;
+  margin-left: 0.5rem;
+}
+
+/* ─── Animations (Safety Override v3.1.1) ────────── */
+.entry-fade {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: entryFadeShort 0.3s ease-out;
+}
+
+@keyframes entryFadeShort {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.stagger-1 {
+  animation-delay: 0.1s;
+}
+
+.stagger-2 {
+  animation-delay: 0.2s;
+}
+
+.analysis-progress-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 1000;
+}
+
+.analysis-progress-bar {
+  height: 100%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+}
+
+.analysis-progress-bar.loading {
+  animation: progress-indeterminate 2s infinite linear;
+  width: 30%;
+}
+
+@keyframes progress-indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(400%);
+  }
+}
+
+.glow-anchor {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, hsla(var(--h-primary), 90%, 50%, 0.1) 0%, transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+}
